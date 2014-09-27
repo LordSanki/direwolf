@@ -1,0 +1,84 @@
+<div class="col-md-offset-2 col-md-8">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title"><%=@job.title.to_s%></h3>
+    </div>
+    <div class="panel-body">
+      <%if @job%>
+        <form class="form-horizontal" role="form">
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Category:</label>
+            <div class="col-sm-9">
+              <p class="form-control-static"><%= @category %></p>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Company:</label>
+            <div class="col-sm-9">
+              <p class="form-control-static"><%= @employer.company_name %></p>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Contact:</label>
+            <div class="col-sm-9">
+              <p class="form-control-static"><%= @employer.name %></p>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Email:</label>
+            <div class="col-sm-9">
+              <p class="form-control-static"><%= @employer.email %></p>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Tags:</label>
+            <div class="col-sm-9">
+              <p class="form-control-static">
+                <% @job.tag_list.each do |tag|%>
+                  <span class="label label-danger"><%= tag %></span>
+                <%end%>
+              </p>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Deadline:</label>
+            <div class="col-sm-9">
+              <p class="form-control-static"><%= @job.expires_at.to_s %></p>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Job Description:</label>
+            <div class="col-sm-9">
+              <p class="form-control-static"><%= @job.description %></p>
+            </div>
+          </div>
+
+        </form>
+    </div>
+
+      <%if employer_owns @job.id %>
+        <div class="btn-group btn-group-justified">
+          <%= link_to "Manage Applications", job_applications_path(:job_id=>@job.id), class: "btn btn-success" %>
+          <%= link_to "Edit", edit_job_path(:id => @job.id), class: "btn btn-primary" %>
+          <%= link_to "Delete", job_path(:id => @job.id), :method=> :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+        </div>
+      <%end%>
+      <%if user_is :seeker%>
+        <%if @job.expired? %>
+          <div class="panel-footer">Deadline has expired</div>
+        <%else%>
+          <%= link_to "Apply", new_job_application_path(:job_id=>@job.id), class: "btn btn-success btn-block" %>
+        <%end%>
+      <%end%>
+      <%if get_user_type.nil? %>
+        <%= link_to "Log In To Apply!", "/auth/google_oauth2", id: "sign_in", class: "btn btn-success btn-block" %>
+      <%end%>
+    <%end%>
+  </div>
+</div>

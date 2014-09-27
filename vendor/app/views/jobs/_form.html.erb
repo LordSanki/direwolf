@@ -1,0 +1,83 @@
+<%= form_for @job, :html => {:class => "form-horizontal center"} do |f| %>
+  <% if @job.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@job.errors.count, "error") %> prohibited this employer from being saved:</h2>
+
+    <ul>
+    <% @job.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+  <% end %>
+
+  <form class="form-horizontal">
+    <fieldset>
+
+      <legend><%= title %></legend>
+
+      <!-- Text input-->
+      <div class="form-group">
+        <div class="field">
+          <%= f.label :title, "Job Title:", class: "col-md-4 control-label", for: "jobTitle" %>
+          <div class="col-md-4">
+            <%= f.text_field :title, class: "form-control input-md", placeholder: "The Job's Title" %>
+            <span class="help-block">Every good job post has a title</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Select Basic -->
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="jobCategory">Job Category</label>
+        <div class="col-md-4">
+          <%= f.select(:category_id, options_for_select(@categories.map{ |c| [c.name, "#{c.id}:#{c.name}"] }), {}, {class: "form-control"}) %>
+          <span class="help-block">Select the Job's Category</span>
+        </div>
+      </div>
+
+      <!-- Text input-->
+      <div class="form-group">
+          <%= f.label :tag_list, "Job Tags:", class: "col-md-4 control-label", for: "job_tag_list" %>
+        <div class="col-md-4">
+          <%= f.text_field :tag_list, class: "form-control input-md", placeholder: "Tags (separated by commas)" %>
+          <span class="help-block">Comma Separated List of Tags</span>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class='col-sm-6'>
+            <div class="form-group">
+              <div class='input-group date' id='datetimepicker1'>
+                <%= f.text_field :expires_at,  class: "form-control" %>
+                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                </span>
+              </div>
+            </div>
+          </div>
+          <script type="text/javascript">
+            $(function () {
+             $('#datetimepicker1').datetimepicker();
+            });
+          </script>
+        </div>
+      </div>
+
+      <!-- Textarea -->
+      <div class="form-group">
+        <%= f.label :description, "Job Description:", class: "col-md-4 control-label", for: "job_description" %>
+        <div class="col-md-4">
+          <%= f.text_area :description, class: "form-control input-md", rows: "10", placeholder: "Enter job description." %>
+        </div>
+      </div>
+
+      <!-- Button -->
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="submit"></label>
+        <%= f.submit 'Save', class: 'col-md-offset-2 btn btn-primary' %>
+      </div>
+
+    </fieldset>
+  </form>
+
+<% end %>
