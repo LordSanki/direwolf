@@ -1,3 +1,0 @@
-Status for Admins and employers
-created_at for applications jobs
-default entries in status
