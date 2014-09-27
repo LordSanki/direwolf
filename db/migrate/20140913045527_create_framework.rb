@@ -48,7 +48,6 @@ class CreateFramework < ActiveRecord::Migration
     add_foreign_key(:job_applications, :jobs)
     add_foreign_key(:job_applications, :employers)
     add_foreign_key(:job_applications, :seekers)
-    add_foreign_key(:job_applications, :statuses)
 
   end
 end
