@@ -35,7 +35,7 @@ class CreateFramework < ActiveRecord::Migration
       t.references :job, :null=>false
       t.references :employer, :null=>false
       t.references :seeker, :null=>false
-      t.references :status, :null=>false
+      t.string :status_id, :defualt=>"pending"
       t.text :cover_letter
       t.timestamps
     end
